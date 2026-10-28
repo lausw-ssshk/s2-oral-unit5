@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S2 Oral · Unit 5 — Starting &amp; Ending a Presentation</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --primary: #1e5a96;
+      --primary-soft: #e8f1fa;
+      --border: #d5dee9;
+      --shadow: 0 8px 24px rgba(26, 35, 50, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(160deg, #eef4fb 0%, #f8fafc 45%, #eef6f2 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 32px 16px 48px;
+    }
+    header { text-align: center; margin-bottom: 28px; }
+    .badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.65rem;
+      letter-spacing: 0.01em;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 20px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color 0.15s, transform 0.1s, box-shadow 0.15s;
+    }
+    .card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(26, 35, 50, 0.12);
+    }
+    .card:active { transform: translateY(0); }
+    .card-icon {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .meta {
+      text-align: center;
+      margin-top: 28px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="badge">S2 Oral · Unit 5</div>
+      <h1>Starting &amp; Ending a Presentation</h1>
+      <p class="subtitle">Booklet pp.14–15 · Teacher: Sherlock Lau</p>
+    </header>
+
+    <a class="card" href="slides.html">
+      <div class="card-icon">📽️</div>
+      <h2>Slides</h2>
+      <p>Openings A–D, ending in 3 steps, useful phrases, and mini practice. Projector- and phone-friendly.</p>
+    </a>
+
+    <a class="card" href="quiz.html">
+      <div class="card-icon">✏️</div>
+      <h2>Quiz</h2>
+      <p>Multiple choice and true/false on openings and closings. Immediate feedback. Score only — no name needed.</p>
+    </a>
+
+    <p class="meta">English · Self-contained · Works offline after first load</p>
+  </div>
+</body>
+</html>

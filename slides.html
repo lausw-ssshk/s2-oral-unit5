@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Slides · S2 Oral Unit 5 — Starting &amp; Ending</title>
+  <style>
+    :root {
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --primary: #1e5a96;
+      --primary-soft: #e8f1fa;
+      --ok: #0d7a4f;
+      --border: #d5dee9;
+      --card: #ffffff;
+      --accent: #2f8f6b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: #0f1c2e;
+      touch-action: pan-y;
+    }
+    .deck {
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+    .slide {
+      display: none;
+      height: 100%;
+      width: 100%;
+      padding: 48px 28px 88px;
+      overflow-y: auto;
+      background: linear-gradient(160deg, #eef4fb 0%, #f8fafc 50%, #eef6f2 100%);
+      -webkit-overflow-scrolling: touch;
+    }
+    .slide.active { display: flex; flex-direction: column; }
+    .slide-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: clamp(0.75rem, 1.6vw, 0.9rem);
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      align-self: flex-start;
+    }
+    h1 {
+      font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: clamp(1.35rem, 3.5vw, 2rem);
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: var(--primary);
+    }
+    .lead {
+      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .big {
+      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      line-height: 1.45;
+    }
+    ul.points {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+    ul.points li {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      box-shadow: 0 4px 14px rgba(26,35,50,0.06);
+    }
+    ul.points li strong { color: var(--primary); }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 640px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .slide { padding: 36px 16px 96px; }
+    }
+    .ex {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: clamp(0.92rem, 2vw, 1.1rem);
+      line-height: 1.45;
+    }
+    .ex .tag {
+      display: inline-block;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.85em;
+      margin-bottom: 4px;
+    }
+    .ex.ask { border-left-color: var(--accent); }
+    .ex.ask .tag { color: var(--accent); }
+    .step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .step .num {
+      flex: 0 0 auto;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+    .step .body { flex: 1; }
+    .step .body h3 {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      margin-bottom: 4px;
+    }
+    .step .body p {
+      font-size: clamp(0.9rem, 1.9vw, 1.05rem);
+      color: var(--muted);
+      margin: 0;
+    }
+    .phrase-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .phrase-box h3 {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .phrase-box ul {
+      margin: 0;
+      padding-left: 1.15em;
+      font-size: clamp(0.9rem, 1.9vw, 1.05rem);
+    }
+    .phrase-box li { margin-bottom: 4px; }
+    .practice {
+      background: var(--primary-soft);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+    }
+    .practice strong { color: var(--primary); }
+    .hint {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+    }
+    .cta {
+      display: inline-block;
+      margin-top: 18px;
+      background: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      padding: 12px 22px;
+      border-radius: 999px;
+      box-shadow: 0 6px 16px rgba(30,90,150,0.25);
+    }
+    .cta:hover { filter: brightness(1.08); }
+    .title-meta {
+      color: var(--muted);
+      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      margin-top: 8px;
+    }
+    /* Controls */
+    .bar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+      z-index: 20;
+    }
+    .bar button {
+      appearance: none;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      min-width: 88px;
+    }
+    .bar button:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+    .bar button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .bar button.primary {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .progress {
+      font-size: 0.95rem;
+      color: var(--muted);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .home {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 20;
+      text-decoration: none;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+    }
+    .home:hover { color: var(--primary); border-color: var(--primary); }
+  </style>
+</head>
+<body>
+  <a class="home" href="index.html">← Hub</a>
+  <div class="deck" id="deck">
+
+    <!-- 1 Title -->
+    <section class="slide active" data-title="Title">
+      <div class="slide-inner">
+        <span class="badge">S2 Oral · Unit 5</span>
+        <h1>Starting &amp; Ending<br>a Presentation</h1>
+        <p class="title-meta">Booklet pp.14–15</p>
+        <p class="lead" style="margin-top:18px">How to open strong · How to close clearly</p>
+      </div>
+    </section>
+
+    <!-- 2 Why opening matters -->
+    <section class="slide" data-title="Why openings matter">
+      <div class="slide-inner">
+        <span class="badge">Openings</span>
+        <h2>Why a strong opening matters</h2>
+        <ul class="points">
+          <li><strong>Get people interested</strong> — listeners decide quickly whether to pay attention.</li>
+          <li><strong>Interact with the audience</strong> — a question or situation pulls them in.</li>
+          <li>Then signal your plan: <em>There are three reasons why…</em></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 Four opening styles -->
+    <section class="slide" data-title="Four opening styles">
+      <div class="slide-inner">
+        <span class="badge">Openings · A–D</span>
+        <h2>Four opening styles</h2>
+        <p class="lead">Same topic: Japan as a tourist destination. Which feels strongest?</p>
+        <div class="grid-2">
+          <div class="ex">
+            <div class="tag">A · Plain</div>
+            Today I want to talk about Japan.
+          </div>
+          <div class="ex">
+            <div class="tag">B · Clear + friendly</div>
+            Hello everyone. Today I’d like to talk about my favourite tourist destination, Japan.
+          </div>
+          <div class="ex ask">
+            <div class="tag">C · Asking a question</div>
+            Good morning everyone. Do you like travelling? Me too. So today I’d like to talk about my favourite tourist destination, Japan.
+          </div>
+          <div class="ex ask">
+            <div class="tag">D · Creating a situation</div>
+            Hi everyone. Suppose you could fly to any country right now — where would you go? Today I’d like to talk about my favourite tourist destination, Japan.
+          </div>
+        </div>
+        <p class="hint">C and D usually work better — they involve the audience.</p>
+      </div>
+    </section>
+
+    <!-- 4 Ending in 3 steps -->
+    <section class="slide" data-title="Ending in 3 steps">
+      <div class="slide-inner">
+        <span class="badge">Closings</span>
+        <h2>Ending in 3 steps</h2>
+        <div class="step">
+          <div class="num">1</div>
+          <div class="body">
+            <h3>Give an overall idea</h3>
+            <p>In conclusion… / In short… / Overall, I think…</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div class="body">
+            <h3>Say the presentation is over</h3>
+            <p>I hope my presentation was interesting. Thank you. · That’s all I want to say. Thank you. · That’s the end of my presentation. Thank you.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div class="body">
+            <h3>Optional: challenge or encourage</h3>
+            <p>Why don’t you start and try it out today? · How are we going to change the world? · What will happen if you don’t act now?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 Useful phrases -->
+    <section class="slide" data-title="Useful phrases">
+      <div class="slide-inner">
+        <span class="badge">Language bank</span>
+        <h2>Useful phrases</h2>
+        <div class="phrase-box">
+          <h3>Openings</h3>
+          <ul>
+            <li>Hello / Good morning, everyone.</li>
+            <li>Today I’d like to talk about…</li>
+            <li>Do you like…? / Have you ever…?</li>
+            <li>Suppose you could… / Imagine if…</li>
+            <li>There are three reasons why…</li>
+          </ul>
+        </div>
+        <div class="phrase-box">
+          <h3>Closings</h3>
+          <ul>
+            <li>In conclusion… / In short… / Overall, I think…</li>
+            <li>That’s all I want to say. / That’s the end of my presentation.</li>
+            <li>I hope my presentation was interesting. Thank you.</li>
+            <li>Why don’t you…? / What will happen if…?</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 Mini practice -->
+    <section class="slide" data-title="Mini practice">
+      <div class="slide-inner">
+        <span class="badge">Try it</span>
+        <h2>Mini practice — a book you like</h2>
+        <div class="practice">
+          <p><strong>Task:</strong> Prepare a short beginning <em>and</em> ending for a talk about a book you like.</p>
+        </div>
+        <ul class="points" style="margin-top:14px">
+          <li><strong>Opening:</strong> Use style B, C, or D (friendly · question · situation).</li>
+          <li><strong>Ending:</strong> Overall idea → say it’s over → optional challenge/question.</li>
+          <li>Keep it short — about 30–45 seconds when spoken.</li>
+        </ul>
+        <p class="hint">Example start: “Have you ever finished a book and still thought about it days later? Today I’d like to talk about…”</p>
+      </div>
+    </section>
+
+    <!-- 7 Recap -->
+    <section class="slide" data-title="Recap">
+      <div class="slide-inner">
+        <span class="badge">Remember</span>
+        <h2>Quick recap</h2>
+        <ul class="points">
+          <li><strong>Open</strong> to interest and involve — questions and situations beat a flat start.</li>
+          <li><strong>Close</strong> in three steps: overall idea → it’s over → optional challenge.</li>
+          <li><strong>Practise</strong> with a real topic (e.g. a book) so the phrases feel natural.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8 Quiz entry -->
+    <section class="slide" data-title="Quiz">
+      <div class="slide-inner" style="align-items:flex-start">
+        <span class="badge">Check yourself</span>
+        <h2>Ready for the quiz?</h2>
+        <p class="big">~12 short questions on openings and closings. Multiple choice and true/false. Instant feedback. Score only — no name needed.</p>
+        <a class="cta" href="quiz.html">Start the quiz →</a>
+        <p class="hint">Or press Next for nothing more — this is the last slide. Use Hub to return.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="bar">
+    <button type="button" id="prevBtn" disabled>← Prev</button>
+    <span class="progress" id="progress">1 / 8</span>
+    <button type="button" id="nextBtn" class="primary">Next →</button>
+  </div>
+
+  <script>
+    (function () {
+      var slides = Array.prototype.slice.call(document.querySelectorAll(".slide"));
+      var i = 0;
+      var prevBtn = document.getElementById("prevBtn");
+      var nextBtn = document.getElementById("nextBtn");
+      var progress = document.getElementById("progress");
+      var touchX = null;
+
+      function show(n) {
+        if (n < 0 || n >= slides.length) return;
+        slides[i].classList.remove("active");
+        i = n;
+        slides[i].classList.add("active");
+        slides[i].scrollTop = 0;
+        progress.textContent = (i + 1) + " / " + slides.length;
+        prevBtn.disabled = i === 0;
+        nextBtn.disabled = i === slides.length - 1;
+        nextBtn.classList.toggle("primary", i < slides.length - 1);
+      }
+
+      prevBtn.addEventListener("click", function () { show(i - 1); });
+      nextBtn.addEventListener("click", function () { show(i + 1); });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
+          e.preventDefault();
+          show(i + 1);
+        } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
+          e.preventDefault();
+          show(i - 1);
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          show(0);
+        } else if (e.key === "End") {
+          e.preventDefault();
+          show(slides.length - 1);
+        }
+      });
+
+      document.addEventListener("touchstart", function (e) {
+        if (e.changedTouches && e.changedTouches[0]) touchX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      document.addEventListener("touchend", function (e) {
+        if (touchX === null || !e.changedTouches || !e.changedTouches[0]) return;
+        var dx = e.changedTouches[0].clientX - touchX;
+        touchX = null;
+        if (Math.abs(dx) < 50) return;
+        if (dx < 0) show(i + 1);
+        else show(i - 1);
+      }, { passive: true });
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>

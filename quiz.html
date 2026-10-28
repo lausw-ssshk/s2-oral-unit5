@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz · S2 Oral Unit 5 — Starting &amp; Ending</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --ink: #1a2332;
+      --muted: #5a6a7e;
+      --primary: #1e5a96;
+      --primary-soft: #e8f1fa;
+      --ok: #0d7a4f;
+      --ok-bg: #e6f6ef;
+      --bad: #b42318;
+      --bad-bg: #fdecea;
+      --border: #d5dee9;
+      --shadow: 0 8px 24px rgba(26, 35, 50, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(160deg, #eef4fb 0%, #f8fafc 45%, #eef6f2 100%);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+    .wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 20px 16px 48px;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .top a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .top a:hover { color: var(--primary); }
+    header { text-align: center; margin-bottom: 16px; }
+    .badge {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.4rem;
+    }
+    .subtitle { color: var(--muted); font-size: 0.95rem; margin: 0; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 20px;
+      margin-bottom: 16px;
+    }
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+    .bar {
+      height: 8px;
+      background: #e7eef6;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1e5a96, #2f8f6b);
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+    .type-chip {
+      display: inline-block;
+      font-size: 0.78rem;
+      background: #f0f4f8;
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .q-text {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin: 0 0 16px;
+    }
+    .options { display: grid; gap: 10px; }
+    .opt {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
+      text-align: left;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      font: inherit;
+      color: inherit;
+      transition: border-color 0.15s, background 0.15s, transform 0.05s;
+    }
+    .opt:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+    .opt:active:not(:disabled) { transform: scale(0.995); }
+    .opt:disabled { cursor: default; }
+    .opt .letter {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eef3f8;
+      color: var(--primary);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .opt .label { flex: 1; padding-top: 2px; }
+    .opt.correct {
+      border-color: var(--ok);
+      background: var(--ok-bg);
+    }
+    .opt.correct .letter { background: var(--ok); color: #fff; }
+    .opt.wrong {
+      border-color: var(--bad);
+      background: var(--bad-bg);
+    }
+    .opt.wrong .letter { background: var(--bad); color: #fff; }
+    .feedback {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .feedback.show { display: block; }
+    .feedback.ok { background: var(--ok-bg); color: var(--ok); }
+    .feedback.bad { background: var(--bad-bg); color: var(--bad); }
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none;
+      border: none;
+      font: inherit;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn:hover { filter: brightness(1.06); }
+    .btn:disabled { opacity: 0.45; cursor: default; filter: none; }
+    .btn.ghost {
+      background: #fff;
+      color: var(--primary);
+      border: 1.5px solid var(--border);
+    }
+    .btn.ghost:hover { border-color: var(--primary); background: var(--primary-soft); }
+    .hidden { display: none !important; }
+    .score-big {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-align: center;
+      margin: 8px 0 4px;
+    }
+    .score-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .stamp {
+      text-align: center;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+    .start-actions { text-align: center; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <a href="index.html">← Hub</a>
+      <a href="slides.html">Slides</a>
+    </div>
+
+    <!-- Start screen -->
+    <div id="startScreen">
+      <header>
+        <div class="badge">S2 Oral · Unit 5</div>
+        <h1>Openings &amp; Closings Quiz</h1>
+        <p class="subtitle">12 questions · MC + True/False · shuffled each time</p>
+      </header>
+      <div class="card">
+        <p style="margin:0 0 12px;color:var(--muted)">Check what you remember from the booklet. After each answer you’ll see a short why. At the end: score and time only — no name, no email.</p>
+        <div class="start-actions">
+          <button type="button" class="btn" id="startBtn">Start quiz</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question screen -->
+    <div id="quizScreen" class="hidden">
+      <div class="card">
+        <div class="progress-row">
+          <span id="qCounter">Question 1 of 12</span>
+          <span id="scoreLive">Score: 0</span>
+        </div>
+        <div class="bar"><span id="barFill"></span></div>
+        <div class="type-chip" id="typeChip">Multiple choice</div>
+        <p class="q-text" id="qText"></p>
+        <div class="options" id="options"></div>
+        <div class="feedback" id="feedback"></div>
+        <div class="actions">
+          <button type="button" class="btn" id="nextQBtn" disabled>Next</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- End screen -->
+    <div id="endScreen" class="hidden">
+      <header>
+        <div class="badge">Done</div>
+        <h1>Your result</h1>
+      </header>
+      <div class="card">
+        <div class="score-big" id="finalScore">0 / 12</div>
+        <p class="score-sub" id="finalPct"></p>
+        <p class="stamp" id="finalStamp"></p>
+        <div class="actions" style="justify-content:center;margin-top:20px">
+          <button type="button" class="btn" id="retryBtn">Try again</button>
+          <a class="btn ghost" href="slides.html" style="text-decoration:none;display:inline-block">Back to slides</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var BANK = [
+        {
+          type: "mc",
+          q: "Why do introductions matter in a presentation?",
+          options: [
+            "To fill the first minute with any words",
+            "To get people interested and interact with the audience",
+            "To list every slide title before you begin",
+            "To apologise for speaking English"
+          ],
+          answer: 1,
+          why: "A strong opening grabs interest and involves listeners — that is the point of the introduction."
+        },
+        {
+          type: "mc",
+          q: "Which opening style asks the audience a question?",
+          options: [
+            "A: Today I want to talk about Japan.",
+            "B: Hello everyone. Today I’d like to talk about my favourite tourist destination, Japan.",
+            "C: Good morning everyone. Do you like travelling? Me too. So today I’d like to talk about… Japan.",
+            "D is only for endings, not openings."
+          ],
+          answer: 2,
+          why: "Style C starts with a question (Do you like travelling?) to pull the audience in."
+        },
+        {
+          type: "mc",
+          q: "“Suppose you could fly to any country…” is an example of…",
+          options: [
+            "Giving an overall idea at the end",
+            "Creating a situation (opening style D)",
+            "Saying the presentation is over",
+            "A true/false quiz question"
+          ],
+          answer: 1,
+          why: "Style D creates a situation so listeners imagine themselves in the topic."
+        },
+        {
+          type: "mc",
+          q: "After your opening, speakers often continue with…",
+          options: [
+            "That’s the end of my presentation. Thank you.",
+            "There are three reasons why…",
+            "Please mark my homework.",
+            "In conclusion…"
+          ],
+          answer: 1,
+          why: "Signalling the structure early (“There are three reasons why…”) helps the audience follow."
+        },
+        {
+          type: "mc",
+          q: "How many main steps are there for ending a presentation (in this unit)?",
+          options: ["1", "2", "3", "5"],
+          answer: 2,
+          why: "Three steps: overall idea → say it is over → optional challenge/encourage."
+        },
+        {
+          type: "mc",
+          q: "Which phrase best fits Step 1 of an ending (overall idea)?",
+          options: [
+            "Do you like travelling?",
+            "In conclusion… / In short… / Overall, I think…",
+            "Hello everyone.",
+            "Suppose you could…"
+          ],
+          answer: 1,
+          why: "Step 1 summarises: In conclusion / In short / Overall, I think…"
+        },
+        {
+          type: "mc",
+          q: "Which line shows Step 2 — saying the presentation is over?",
+          options: [
+            "Why don’t you start and try it out today?",
+            "Today I’d like to talk about Japan.",
+            "That’s all I want to say. Thank you.",
+            "There are three reasons why…"
+          ],
+          answer: 2,
+          why: "Clear finish lines: That’s all I want to say / That’s the end of my presentation / I hope my presentation was interesting. Thank you."
+        },
+        {
+          type: "mc",
+          q: "Step 3 of an ending is optional. What does it do?",
+          options: [
+            "Repeats the whole talk word for word",
+            "Challenges or encourages the audience with a question",
+            "Asks the teacher for a grade",
+            "Introduces a new topic unrelated to the talk"
+          ],
+          answer: 1,
+          why: "Optional Step 3: challenge/encourage — e.g. Why don’t you try it out today? What will happen if you don’t act now?"
+        },
+        {
+          type: "tf",
+          q: "True or False: A flat opening like “Today I want to talk about Japan.” is usually as strong as asking a question.",
+          options: ["True", "False"],
+          answer: 1,
+          why: "False. Styles that ask a question or create a situation usually involve the audience more."
+        },
+        {
+          type: "tf",
+          q: "True or False: You should always use Step 3 (challenge/encourage) when you end.",
+          options: ["True", "False"],
+          answer: 1,
+          why: "False. Step 3 is optional. Steps 1 and 2 are the core close."
+        },
+        {
+          type: "tf",
+          q: "True or False: “I hope my presentation was interesting. Thank you.” can mark the end of a talk.",
+          options: ["True", "False"],
+          answer: 0,
+          why: "True. It clearly signals that the presentation is over (Step 2)."
+        },
+        {
+          type: "tf",
+          q: "True or False: For mini practice, you only need an opening — an ending is not required.",
+          options: ["True", "False"],
+          answer: 1,
+          why: "False. The mini practice asks for both a beginning and an ending (e.g. about a book you like)."
+        }
+      ];
+
+      var letters = "ABCDEFGH";
+      var order = [];
+      var idx = 0;
+      var score = 0;
+      var answered = false;
+
+      var startScreen = document.getElementById("startScreen");
+      var quizScreen = document.getElementById("quizScreen");
+      var endScreen = document.getElementById("endScreen");
+      var qText = document.getElementById("qText");
+      var optionsEl = document.getElementById("options");
+      var feedback = document.getElementById("feedback");
+      var nextQBtn = document.getElementById("nextQBtn");
+      var qCounter = document.getElementById("qCounter");
+      var scoreLive = document.getElementById("scoreLive");
+      var barFill = document.getElementById("barFill");
+      var typeChip = document.getElementById("typeChip");
+
+      function shuffle(arr) {
+        var a = arr.slice();
+        for (var i = a.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+      }
+
+      function prepareQuestion(raw) {
+        var opts = raw.options.map(function (text, i) {
+          return { text: text, correct: i === raw.answer };
+        });
+        opts = shuffle(opts);
+        var answer = 0;
+        for (var i = 0; i < opts.length; i++) {
+          if (opts[i].correct) { answer = i; break; }
+        }
+        return {
+          type: raw.type,
+          q: raw.q,
+          options: opts.map(function (o) { return o.text; }),
+          answer: answer,
+          why: raw.why
+        };
+      }
+
+      function startQuiz() {
+        order = shuffle(BANK).map(prepareQuestion);
+        idx = 0;
+        score = 0;
+        startScreen.classList.add("hidden");
+        endScreen.classList.add("hidden");
+        quizScreen.classList.remove("hidden");
+        render();
+      }
+
+      function render() {
+        var item = order[idx];
+        answered = false;
+        nextQBtn.disabled = true;
+        nextQBtn.textContent = idx === order.length - 1 ? "See result" : "Next";
+        feedback.className = "feedback";
+        feedback.textContent = "";
+        qCounter.textContent = "Question " + (idx + 1) + " of " + order.length;
+        scoreLive.textContent = "Score: " + score;
+        barFill.style.width = ((idx / order.length) * 100) + "%";
+        typeChip.textContent = item.type === "tf" ? "True / False" : "Multiple choice";
+        qText.textContent = item.q;
+        optionsEl.innerHTML = "";
+        item.options.forEach(function (opt, i) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "opt";
+          btn.innerHTML = '<span class="letter">' + letters[i] + '</span><span class="label"></span>';
+          btn.querySelector(".label").textContent = opt;
+          btn.addEventListener("click", function () { choose(i); });
+          optionsEl.appendChild(btn);
+        });
+      }
+
+      function choose(i) {
+        if (answered) return;
+        answered = true;
+        var item = order[idx];
+        var buttons = optionsEl.querySelectorAll(".opt");
+        buttons.forEach(function (b, n) {
+          b.disabled = true;
+          if (n === item.answer) b.classList.add("correct");
+          if (n === i && i !== item.answer) b.classList.add("wrong");
+        });
+        var ok = i === item.answer;
+        if (ok) score++;
+        scoreLive.textContent = "Score: " + score;
+        feedback.className = "feedback show " + (ok ? "ok" : "bad");
+        feedback.textContent = (ok ? "Correct. " : "Not quite. ") + item.why;
+        nextQBtn.disabled = false;
+        barFill.style.width = (((idx + 1) / order.length) * 100) + "%";
+      }
+
+      function finish() {
+        quizScreen.classList.add("hidden");
+        endScreen.classList.remove("hidden");
+        document.getElementById("finalScore").textContent = score + " / " + order.length;
+        var pct = Math.round((score / order.length) * 100);
+        var msg = pct >= 85 ? "Excellent work." : pct >= 65 ? "Solid — review any misses." : "Keep practising the phrases.";
+        document.getElementById("finalPct").textContent = pct + "% · " + msg;
+        var now = new Date();
+        var stamp = now.toLocaleString("en-HK", {
+          timeZone: "Asia/Hong_Kong",
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        });
+        document.getElementById("finalStamp").textContent = "Completed · " + stamp + " (Hong Kong time)";
+      }
+
+      document.getElementById("startBtn").addEventListener("click", startQuiz);
+      document.getElementById("retryBtn").addEventListener("click", startQuiz);
+      nextQBtn.addEventListener("click", function () {
+        if (!answered) return;
+        if (idx >= order.length - 1) finish();
+        else { idx++; render(); }
+      });
+    })();
+  </script>
+</body>
+</html>
