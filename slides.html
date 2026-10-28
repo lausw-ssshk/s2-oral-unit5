@@ -14,6 +14,8 @@
       --border: #d5dee9;
       --card: #ffffff;
       --accent: #2f8f6b;
+      --warm: #c47a1a;
+      --warm-soft: #fff4e5;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body {
@@ -24,11 +26,7 @@
       background: #0f1c2e;
       touch-action: pan-y;
     }
-    .deck {
-      height: 100%;
-      width: 100%;
-      position: relative;
-    }
+    .deck { height: 100%; width: 100%; position: relative; }
     .slide {
       display: none;
       height: 100%;
@@ -65,33 +63,66 @@
       margin-bottom: 12px;
     }
     h2 {
-      font-size: clamp(1.35rem, 3.5vw, 2rem);
+      font-size: clamp(1.3rem, 3.4vw, 1.9rem);
       line-height: 1.25;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       color: var(--primary);
     }
     .lead {
-      font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+      font-size: clamp(1.05rem, 2.4vw, 1.3rem);
       color: var(--muted);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .big {
-      font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
       line-height: 1.45;
     }
-    ul.points {
-      list-style: none;
-      display: grid;
-      gap: 12px;
+    .visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
     }
+    .icon-blob {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      box-shadow: 0 4px 12px rgba(26,35,50,0.06);
+      flex-shrink: 0;
+    }
+    .icon-blob.lg { width: 88px; height: 88px; font-size: 2.6rem; border-radius: 22px; }
+    .icon-blob.green { background: #e6f6ef; }
+    .icon-blob.warm { background: var(--warm-soft); }
+    .icon-blob.purple { background: #f0e8fa; }
+    ul.points { list-style: none; display: grid; gap: 12px; }
     ul.points li {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 14px 16px;
-      font-size: clamp(1rem, 2.2vw, 1.25rem);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
       box-shadow: 0 4px 14px rgba(26,35,50,0.06);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
     }
+    ul.points li .pic {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
+    }
+    ul.points li .txt { flex: 1; }
     ul.points li strong { color: var(--primary); }
     .grid-2 {
       display: grid;
@@ -108,18 +139,22 @@
       border-left: 4px solid var(--primary);
       border-radius: 10px;
       padding: 12px 14px;
-      font-size: clamp(0.92rem, 2vw, 1.1rem);
+      font-size: clamp(0.9rem, 2vw, 1.08rem);
       line-height: 1.45;
     }
     .ex .tag {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       font-weight: 700;
       color: var(--primary);
-      font-size: 0.85em;
-      margin-bottom: 4px;
+      font-size: 0.88em;
+      margin-bottom: 6px;
     }
+    .ex .tag .mini { font-size: 1.15em; }
     .ex.ask { border-left-color: var(--accent); }
     .ex.ask .tag { color: var(--accent); }
+    .ex.best { background: #f3fbf7; }
     .step {
       display: flex;
       gap: 14px;
@@ -132,23 +167,33 @@
     }
     .step .num {
       flex: 0 0 auto;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       background: var(--primary);
       color: #fff;
       display: grid;
       place-items: center;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1.2rem;
+    }
+    .step .pic {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      display: grid;
+      place-items: center;
+      font-size: 1.35rem;
     }
     .step .body { flex: 1; }
     .step .body h3 {
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
       margin-bottom: 4px;
     }
     .step .body p {
-      font-size: clamp(0.9rem, 1.9vw, 1.05rem);
+      font-size: clamp(0.88rem, 1.9vw, 1.02rem);
       color: var(--muted);
       margin: 0;
     }
@@ -163,6 +208,9 @@
       font-size: clamp(0.95rem, 2vw, 1.1rem);
       color: var(--primary);
       margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
     .phrase-box ul {
       margin: 0;
@@ -174,7 +222,14 @@
       background: var(--primary-soft);
       border-radius: 12px;
       padding: 16px 18px;
-      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .practice .pic {
+      font-size: 2rem;
+      flex-shrink: 0;
     }
     .practice strong { color: var(--primary); }
     .hint {
@@ -200,7 +255,19 @@
       font-size: clamp(1rem, 2.2vw, 1.25rem);
       margin-top: 8px;
     }
-    /* Controls */
+    .topic-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-weight: 600;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      margin: 10px 0 16px;
+      align-self: flex-start;
+    }
     .bar {
       position: fixed;
       left: 0; right: 0; bottom: 0;
@@ -232,10 +299,7 @@
       background: var(--primary-soft);
       color: var(--primary);
     }
-    .bar button:disabled {
-      opacity: 0.4;
-      cursor: default;
-    }
+    .bar button:disabled { opacity: 0.4; cursor: default; }
     .bar button.primary {
       background: var(--primary);
       color: #fff;
@@ -272,9 +336,13 @@
     <section class="slide active" data-title="Title">
       <div class="slide-inner">
         <span class="badge">S2 Oral · Unit 5</span>
+        <div class="visual">
+          <div class="icon-blob lg" aria-hidden="true">🚪</div>
+          <div class="icon-blob lg green" aria-hidden="true">🏁</div>
+        </div>
         <h1>Starting &amp; Ending<br>a Presentation</h1>
-        <p class="title-meta">Booklet pp.14–15</p>
-        <p class="lead" style="margin-top:18px">How to open strong · How to close clearly</p>
+        <p class="title-meta">How to begin well · How to finish clearly</p>
+        <p class="lead" style="margin-top:12px">Booklet pp.14–15</p>
       </div>
     </section>
 
@@ -282,40 +350,52 @@
     <section class="slide" data-title="Why openings matter">
       <div class="slide-inner">
         <span class="badge">Openings</span>
-        <h2>Why a strong opening matters</h2>
+        <div class="visual">
+          <div class="icon-blob lg" aria-hidden="true">👂</div>
+        </div>
+        <h2>Why a good start matters</h2>
         <ul class="points">
-          <li><strong>Get people interested</strong> — listeners decide quickly whether to pay attention.</li>
-          <li><strong>Interact with the audience</strong> — a question or situation pulls them in.</li>
-          <li>Then signal your plan: <em>There are three reasons why…</em></li>
+          <li>
+            <span class="pic" aria-hidden="true">👀</span>
+            <span class="txt"><strong>Make people listen</strong> — they decide fast if your talk is interesting.</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">💬</span>
+            <span class="txt"><strong>Talk with your listeners</strong> — a question or a short story brings them in.</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">3️⃣</span>
+            <span class="txt">Then tell them your plan: <em>There are three reasons why…</em></span>
+          </li>
         </ul>
       </div>
     </section>
 
-    <!-- 3 Four opening styles -->
+    <!-- 3 Four opening styles — favourite app -->
     <section class="slide" data-title="Four opening styles">
       <div class="slide-inner">
         <span class="badge">Openings · A–D</span>
-        <h2>Four opening styles</h2>
-        <p class="lead">Same topic: Japan as a tourist destination. Which feels strongest?</p>
+        <h2>Four ways to start</h2>
+        <div class="topic-chip"><span aria-hidden="true">📱</span> Topic: my favourite app</div>
         <div class="grid-2">
           <div class="ex">
-            <div class="tag">A · Plain</div>
-            Today I want to talk about Japan.
+            <div class="tag"><span class="mini" aria-hidden="true">😐</span> A · Plain</div>
+            Today I want to talk about my favourite app.
           </div>
           <div class="ex">
-            <div class="tag">B · Clear + friendly</div>
-            Hello everyone. Today I’d like to talk about my favourite tourist destination, Japan.
+            <div class="tag"><span class="mini" aria-hidden="true">👋</span> B · Hello + clear</div>
+            Hello everyone. Today I’d like to talk about my favourite app, YouTube.
           </div>
-          <div class="ex ask">
-            <div class="tag">C · Asking a question</div>
-            Good morning everyone. Do you like travelling? Me too. So today I’d like to talk about my favourite tourist destination, Japan.
+          <div class="ex ask best">
+            <div class="tag"><span class="mini" aria-hidden="true">❓</span> C · Ask a question</div>
+            Good morning everyone. Do you use apps every day? Me too. So today I’d like to talk about my favourite app, YouTube.
           </div>
-          <div class="ex ask">
-            <div class="tag">D · Creating a situation</div>
-            Hi everyone. Suppose you could fly to any country right now — where would you go? Today I’d like to talk about my favourite tourist destination, Japan.
+          <div class="ex ask best">
+            <div class="tag"><span class="mini" aria-hidden="true">🎬</span> D · Make a picture</div>
+            Hi everyone. Imagine you open your phone and tap one app first — which one is it? Today I’d like to talk about my favourite app, YouTube.
           </div>
         </div>
-        <p class="hint">C and D usually work better — they involve the audience.</p>
+        <p class="hint">C and D are usually stronger — they ask people to think with you.</p>
       </div>
     </section>
 
@@ -323,26 +403,36 @@
     <section class="slide" data-title="Ending in 3 steps">
       <div class="slide-inner">
         <span class="badge">Closings</span>
-        <h2>Ending in 3 steps</h2>
+        <div class="visual">
+          <div class="icon-blob green" aria-hidden="true">1️⃣</div>
+          <div class="icon-blob green" aria-hidden="true">2️⃣</div>
+          <div class="icon-blob warm" aria-hidden="true">3️⃣</div>
+        </div>
+        <h2>Finish in 3 steps</h2>
         <div class="step">
-          <div class="num">1</div>
+          <div class="pic" aria-hidden="true">📌</div>
           <div class="body">
-            <h3>Give an overall idea</h3>
-            <p>In conclusion… / In short… / Overall, I think…</p>
+            <h3>1. Say the main point again</h3>
+            <p>In conclusion… / In short… / Overall, I think…<br>
+            <em>e.g. In short, YouTube helps me learn and relax.</em></p>
           </div>
         </div>
         <div class="step">
-          <div class="num">2</div>
+          <div class="pic" aria-hidden="true">✅</div>
           <div class="body">
-            <h3>Say the presentation is over</h3>
-            <p>I hope my presentation was interesting. Thank you. · That’s all I want to say. Thank you. · That’s the end of my presentation. Thank you.</p>
+            <h3>2. Say you are finished</h3>
+            <p>That’s all I want to say. Thank you.<br>
+            That’s the end of my presentation. Thank you.<br>
+            I hope my presentation was interesting. Thank you.</p>
           </div>
         </div>
         <div class="step">
-          <div class="num">3</div>
+          <div class="pic" aria-hidden="true">🚀</div>
           <div class="body">
-            <h3>Optional: challenge or encourage</h3>
-            <p>Why don’t you start and try it out today? · How are we going to change the world? · What will happen if you don’t act now?</p>
+            <h3>3. (Optional) Ask them to try</h3>
+            <p>Why don’t you try this app this week?<br>
+            What will happen if you don’t practise?<br>
+            How can we use this idea at school?</p>
           </div>
         </div>
       </div>
@@ -351,25 +441,28 @@
     <!-- 5 Useful phrases -->
     <section class="slide" data-title="Useful phrases">
       <div class="slide-inner">
-        <span class="badge">Language bank</span>
-        <h2>Useful phrases</h2>
+        <span class="badge">Useful lines</span>
+        <div class="visual">
+          <div class="icon-blob purple" aria-hidden="true">🗣️</div>
+        </div>
+        <h2>Lines you can copy</h2>
         <div class="phrase-box">
-          <h3>Openings</h3>
+          <h3><span aria-hidden="true">🚪</span> Starting</h3>
           <ul>
             <li>Hello / Good morning, everyone.</li>
             <li>Today I’d like to talk about…</li>
-            <li>Do you like…? / Have you ever…?</li>
-            <li>Suppose you could… / Imagine if…</li>
+            <li>Do you like…? / Do you use… every day?</li>
+            <li>Imagine you… / Suppose you could…</li>
             <li>There are three reasons why…</li>
           </ul>
         </div>
         <div class="phrase-box">
-          <h3>Closings</h3>
+          <h3><span aria-hidden="true">🏁</span> Ending</h3>
           <ul>
             <li>In conclusion… / In short… / Overall, I think…</li>
             <li>That’s all I want to say. / That’s the end of my presentation.</li>
             <li>I hope my presentation was interesting. Thank you.</li>
-            <li>Why don’t you…? / What will happen if…?</li>
+            <li>Why don’t you try…? / What will happen if…?</li>
           </ul>
         </div>
       </div>
@@ -378,17 +471,30 @@
     <!-- 6 Mini practice -->
     <section class="slide" data-title="Mini practice">
       <div class="slide-inner">
-        <span class="badge">Try it</span>
-        <h2>Mini practice — a book you like</h2>
+        <span class="badge">Your turn</span>
+        <h2>Mini practice</h2>
         <div class="practice">
-          <p><strong>Task:</strong> Prepare a short beginning <em>and</em> ending for a talk about a book you like.</p>
+          <span class="pic" aria-hidden="true">📚</span>
+          <div>
+            <p><strong>Task:</strong> Talk about a <strong>book</strong> (or manga) you like.</p>
+            <p style="margin-top:8px;color:var(--muted)">Write a short <strong>start</strong> and a short <strong>end</strong>.</p>
+          </div>
         </div>
         <ul class="points" style="margin-top:14px">
-          <li><strong>Opening:</strong> Use style B, C, or D (friendly · question · situation).</li>
-          <li><strong>Ending:</strong> Overall idea → say it’s over → optional challenge/question.</li>
-          <li>Keep it short — about 30–45 seconds when spoken.</li>
+          <li>
+            <span class="pic" aria-hidden="true">🚪</span>
+            <span class="txt"><strong>Start:</strong> Use B, C, or D (hello · question · imagine).</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">🏁</span>
+            <span class="txt"><strong>End:</strong> Main point again → say finished → (optional) ask them to try.</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">⏱️</span>
+            <span class="txt">Keep it short — about 30–45 seconds when you speak.</span>
+          </li>
         </ul>
-        <p class="hint">Example start: “Have you ever finished a book and still thought about it days later? Today I’d like to talk about…”</p>
+        <p class="hint">Example start: “Have you ever finished a book and still thought about it the next day? Today I’d like to talk about…”</p>
       </div>
     </section>
 
@@ -396,11 +502,23 @@
     <section class="slide" data-title="Recap">
       <div class="slide-inner">
         <span class="badge">Remember</span>
-        <h2>Quick recap</h2>
+        <div class="visual">
+          <div class="icon-blob" aria-hidden="true">🧠</div>
+        </div>
+        <h2>Quick check</h2>
         <ul class="points">
-          <li><strong>Open</strong> to interest and involve — questions and situations beat a flat start.</li>
-          <li><strong>Close</strong> in three steps: overall idea → it’s over → optional challenge.</li>
-          <li><strong>Practise</strong> with a real topic (e.g. a book) so the phrases feel natural.</li>
+          <li>
+            <span class="pic" aria-hidden="true">❓</span>
+            <span class="txt"><strong>Start well</strong> — a question or “imagine…” is better than a flat line.</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">3️⃣</span>
+            <span class="txt"><strong>End in 3 steps</strong> — main point → finished → (optional) ask them to try.</span>
+          </li>
+          <li>
+            <span class="pic" aria-hidden="true">✍️</span>
+            <span class="txt"><strong>Practise</strong> with a real topic (app, book, food, sport…).</span>
+          </li>
         </ul>
       </div>
     </section>
@@ -409,10 +527,13 @@
     <section class="slide" data-title="Quiz">
       <div class="slide-inner" style="align-items:flex-start">
         <span class="badge">Check yourself</span>
+        <div class="visual" style="justify-content:flex-start">
+          <div class="icon-blob lg warm" aria-hidden="true">✏️</div>
+        </div>
         <h2>Ready for the quiz?</h2>
-        <p class="big">~12 short questions on openings and closings. Multiple choice and true/false. Instant feedback. Score only — no name needed.</p>
+        <p class="big">12 short questions about starting and ending. Choose the answer, then see why. At the end: your score and the time — no name needed.</p>
         <a class="cta" href="quiz.html">Start the quiz →</a>
-        <p class="hint">Or press Next for nothing more — this is the last slide. Use Hub to return.</p>
+        <p class="hint">This is the last slide. Use Hub to go back.</p>
       </div>
     </section>
 

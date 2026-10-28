@@ -41,6 +41,20 @@
       border-radius: 999px;
       margin-bottom: 12px;
     }
+    .hero {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .hero span {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: var(--primary-soft);
+      display: grid; place-items: center;
+      font-size: 1.75rem;
+      box-shadow: 0 4px 12px rgba(26,35,50,0.06);
+    }
     h1 {
       margin: 0 0 8px;
       font-size: 1.65rem;
@@ -95,23 +109,26 @@
   <div class="wrap">
     <header>
       <div class="badge">S2 Oral · Unit 5</div>
-      <h1>Starting &amp; Ending a Presentation</h1>
-      <p class="subtitle">Booklet pp.14–15 · Teacher: Sherlock Lau</p>
+      <div class="hero" aria-hidden="true">
+        <span>🚪</span><span>🏁</span>
+      </div>
+      <h1>Starting &amp; Ending<br>a Presentation</h1>
+      <p class="subtitle">Booklet pp.14–15 · How to begin well and finish clearly</p>
     </header>
 
     <a class="card" href="slides.html">
       <div class="card-icon">📽️</div>
       <h2>Slides</h2>
-      <p>Openings A–D, ending in 3 steps, useful phrases, and mini practice. Projector- and phone-friendly.</p>
+      <p>Four ways to start · Finish in 3 steps · Useful lines · Mini practice. Works on phone and projector.</p>
     </a>
 
     <a class="card" href="quiz.html">
       <div class="card-icon">✏️</div>
       <h2>Quiz</h2>
-      <p>Multiple choice and true/false on openings and closings. Immediate feedback. Score only — no name needed.</p>
+      <p>12 short questions. See the answer right away. Score only — no name needed.</p>
     </a>
 
-    <p class="meta">English · Self-contained · Works offline after first load</p>
+    <p class="meta">English · No login · Works offline after first load</p>
   </div>
 </body>
 </html>

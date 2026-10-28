@@ -58,11 +58,21 @@
       border-radius: 999px;
       margin-bottom: 10px;
     }
-    h1 {
-      margin: 0 0 6px;
-      font-size: 1.4rem;
-    }
+    h1 { margin: 0 0 6px; font-size: 1.4rem; }
     .subtitle { color: var(--muted); font-size: 0.95rem; margin: 0; }
+    .hero-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 12px 0 4px;
+    }
+    .hero-icons span {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--primary-soft);
+      display: grid; place-items: center;
+      font-size: 1.5rem;
+    }
     .card {
       background: var(--card);
       border: 1px solid var(--border);
@@ -96,11 +106,13 @@
       transition: width 0.25s ease;
     }
     .type-chip {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 0.78rem;
       background: #f0f4f8;
       color: var(--muted);
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 6px;
       margin-bottom: 8px;
       font-weight: 600;
@@ -219,22 +231,23 @@
       <a href="slides.html">Slides</a>
     </div>
 
-    <!-- Start screen -->
     <div id="startScreen">
       <header>
         <div class="badge">S2 Oral · Unit 5</div>
-        <h1>Openings &amp; Closings Quiz</h1>
-        <p class="subtitle">12 questions · MC + True/False · shuffled each time</p>
+        <div class="hero-icons" aria-hidden="true">
+          <span>🚪</span><span>🏁</span><span>✏️</span>
+        </div>
+        <h1>Starting &amp; Ending Quiz</h1>
+        <p class="subtitle">12 questions · Choose + True/False · new order each time</p>
       </header>
       <div class="card">
-        <p style="margin:0 0 12px;color:var(--muted)">Check what you remember from the booklet. After each answer you’ll see a short why. At the end: score and time only — no name, no email.</p>
+        <p style="margin:0 0 12px;color:var(--muted)">Check the slides: how to start and how to finish. After each answer you see a short why. At the end: score and time only — no name, no email.</p>
         <div class="start-actions">
           <button type="button" class="btn" id="startBtn">Start quiz</button>
         </div>
       </div>
     </div>
 
-    <!-- Question screen -->
     <div id="quizScreen" class="hidden">
       <div class="card">
         <div class="progress-row">
@@ -242,7 +255,7 @@
           <span id="scoreLive">Score: 0</span>
         </div>
         <div class="bar"><span id="barFill"></span></div>
-        <div class="type-chip" id="typeChip">Multiple choice</div>
+        <div class="type-chip" id="typeChip">📝 Choose one</div>
         <p class="q-text" id="qText"></p>
         <div class="options" id="options"></div>
         <div class="feedback" id="feedback"></div>
@@ -252,10 +265,10 @@
       </div>
     </div>
 
-    <!-- End screen -->
     <div id="endScreen" class="hidden">
       <header>
         <div class="badge">Done</div>
+        <div class="hero-icons" aria-hidden="true"><span>🏆</span></div>
         <h1>Your result</h1>
       </header>
       <div class="card">
@@ -275,43 +288,43 @@
       var BANK = [
         {
           type: "mc",
-          q: "Why do introductions matter in a presentation?",
+          q: "Why does a good start matter?",
           options: [
-            "To fill the first minute with any words",
-            "To get people interested and interact with the audience",
-            "To list every slide title before you begin",
-            "To apologise for speaking English"
+            "To use as many long words as you can",
+            "To make people listen and talk with them",
+            "To read every slide title first",
+            "To say sorry for speaking English"
           ],
           answer: 1,
-          why: "A strong opening grabs interest and involves listeners — that is the point of the introduction."
+          why: "A good start makes people listen and brings them into your talk."
         },
         {
           type: "mc",
-          q: "Which opening style asks the audience a question?",
+          q: "Which start asks the audience a question? (Topic: favourite app)",
           options: [
-            "A: Today I want to talk about Japan.",
-            "B: Hello everyone. Today I’d like to talk about my favourite tourist destination, Japan.",
-            "C: Good morning everyone. Do you like travelling? Me too. So today I’d like to talk about… Japan.",
-            "D is only for endings, not openings."
+            "A: Today I want to talk about my favourite app.",
+            "B: Hello everyone. Today I’d like to talk about my favourite app, YouTube.",
+            "C: Do you use apps every day? Me too. So today I’d like to talk about my favourite app, YouTube.",
+            "D is only for endings."
           ],
           answer: 2,
-          why: "Style C starts with a question (Do you like travelling?) to pull the audience in."
+          why: "Style C asks a question (Do you use apps every day?) so people think with you."
         },
         {
           type: "mc",
-          q: "“Suppose you could fly to any country…” is an example of…",
+          q: "“Imagine you open your phone and tap one app first…” is…",
           options: [
-            "Giving an overall idea at the end",
-            "Creating a situation (opening style D)",
-            "Saying the presentation is over",
-            "A true/false quiz question"
+            "Saying you are finished",
+            "Style D — make a picture in their mind",
+            "Saying the main point again",
+            "A True/False trick"
           ],
           answer: 1,
-          why: "Style D creates a situation so listeners imagine themselves in the topic."
+          why: "Style D paints a short picture (“Imagine…”) so listeners join in."
         },
         {
           type: "mc",
-          q: "After your opening, speakers often continue with…",
+          q: "After you start, you often say…",
           options: [
             "That’s the end of my presentation. Thank you.",
             "There are three reasons why…",
@@ -319,78 +332,78 @@
             "In conclusion…"
           ],
           answer: 1,
-          why: "Signalling the structure early (“There are three reasons why…”) helps the audience follow."
+          why: "Tell them your plan early: There are three reasons why…"
         },
         {
           type: "mc",
-          q: "How many main steps are there for ending a presentation (in this unit)?",
+          q: "How many main steps do we use to finish?",
           options: ["1", "2", "3", "5"],
           answer: 2,
-          why: "Three steps: overall idea → say it is over → optional challenge/encourage."
+          why: "Three steps: main point again → say finished → (optional) ask them to try."
         },
         {
           type: "mc",
-          q: "Which phrase best fits Step 1 of an ending (overall idea)?",
+          q: "Which line fits Step 1 (say the main point again)?",
           options: [
-            "Do you like travelling?",
-            "In conclusion… / In short… / Overall, I think…",
+            "Do you use apps every day?",
+            "In short… / Overall, I think…",
             "Hello everyone.",
-            "Suppose you could…"
+            "Imagine you open your phone…"
           ],
           answer: 1,
-          why: "Step 1 summarises: In conclusion / In short / Overall, I think…"
+          why: "Step 1 repeats the big idea: In conclusion / In short / Overall, I think…"
         },
         {
           type: "mc",
-          q: "Which line shows Step 2 — saying the presentation is over?",
+          q: "Which line shows Step 2 — say you are finished?",
           options: [
-            "Why don’t you start and try it out today?",
-            "Today I’d like to talk about Japan.",
+            "Why don’t you try this app this week?",
+            "Today I’d like to talk about YouTube.",
             "That’s all I want to say. Thank you.",
             "There are three reasons why…"
           ],
           answer: 2,
-          why: "Clear finish lines: That’s all I want to say / That’s the end of my presentation / I hope my presentation was interesting. Thank you."
+          why: "Clear finish lines: That’s all I want to say / That’s the end… / I hope my presentation was interesting. Thank you."
         },
         {
           type: "mc",
-          q: "Step 3 of an ending is optional. What does it do?",
+          q: "Step 3 is optional. What does it do?",
           options: [
-            "Repeats the whole talk word for word",
-            "Challenges or encourages the audience with a question",
-            "Asks the teacher for a grade",
-            "Introduces a new topic unrelated to the talk"
+            "Repeat the whole talk again",
+            "Ask them to try or think (a short push)",
+            "Ask the teacher for a mark",
+            "Start a new topic"
           ],
           answer: 1,
-          why: "Optional Step 3: challenge/encourage — e.g. Why don’t you try it out today? What will happen if you don’t act now?"
+          why: "Optional Step 3 asks them to try, e.g. Why don’t you try this app this week?"
         },
         {
           type: "tf",
-          q: "True or False: A flat opening like “Today I want to talk about Japan.” is usually as strong as asking a question.",
+          q: "True or False: “Today I want to talk about my favourite app.” is usually as strong as asking a question.",
           options: ["True", "False"],
           answer: 1,
-          why: "False. Styles that ask a question or create a situation usually involve the audience more."
+          why: "False. A question or “Imagine…” usually makes people listen more."
         },
         {
           type: "tf",
-          q: "True or False: You should always use Step 3 (challenge/encourage) when you end.",
+          q: "True or False: You must always use Step 3 when you finish.",
           options: ["True", "False"],
           answer: 1,
-          why: "False. Step 3 is optional. Steps 1 and 2 are the core close."
+          why: "False. Step 3 is optional. Steps 1 and 2 are the main close."
         },
         {
           type: "tf",
-          q: "True or False: “I hope my presentation was interesting. Thank you.” can mark the end of a talk.",
+          q: "True or False: “I hope my presentation was interesting. Thank you.” can show you are finished.",
           options: ["True", "False"],
           answer: 0,
-          why: "True. It clearly signals that the presentation is over (Step 2)."
+          why: "True. It clearly says the talk is over (Step 2)."
         },
         {
           type: "tf",
-          q: "True or False: For mini practice, you only need an opening — an ending is not required.",
+          q: "True or False: In mini practice, you only need a start — an ending is not needed.",
           options: ["True", "False"],
           answer: 1,
-          why: "False. The mini practice asks for both a beginning and an ending (e.g. about a book you like)."
+          why: "False. You need both a short start and a short end (e.g. about a book you like)."
         }
       ];
 
@@ -459,7 +472,7 @@
         qCounter.textContent = "Question " + (idx + 1) + " of " + order.length;
         scoreLive.textContent = "Score: " + score;
         barFill.style.width = ((idx / order.length) * 100) + "%";
-        typeChip.textContent = item.type === "tf" ? "True / False" : "Multiple choice";
+        typeChip.textContent = item.type === "tf" ? "✅ True / False" : "📝 Choose one";
         qText.textContent = item.q;
         optionsEl.innerHTML = "";
         item.options.forEach(function (opt, i) {
@@ -497,7 +510,7 @@
         endScreen.classList.remove("hidden");
         document.getElementById("finalScore").textContent = score + " / " + order.length;
         var pct = Math.round((score / order.length) * 100);
-        var msg = pct >= 85 ? "Excellent work." : pct >= 65 ? "Solid — review any misses." : "Keep practising the phrases.";
+        var msg = pct >= 85 ? "Great work!" : pct >= 65 ? "Good — check the ones you missed." : "Look at the slides again, then try once more.";
         document.getElementById("finalPct").textContent = pct + "% · " + msg;
         var now = new Date();
         var stamp = now.toLocaleString("en-HK", {
